@@ -10,6 +10,7 @@ public class Movimiento {
   private double monto;
   private boolean esDeposito;
 
+  //NO se verifica que los valores sean no-nulos
   public Movimiento(LocalDate fecha, double monto, boolean esDeposito) {
     this.fecha = fecha;
     this.monto = monto;
@@ -24,6 +25,8 @@ public class Movimiento {
     return fecha;
   }
 
+  //Como solo son dos movimientos no hay mucho problema en que existan estos métodos, pero si quisiéramos añadir más
+  //(extensibilidad), convendría considerar otro modelo.
   public boolean fueDepositado(LocalDate fecha) {
     return isDeposito() && esDeLaFecha(fecha);
   }
@@ -35,7 +38,7 @@ public class Movimiento {
   public boolean esDeLaFecha(LocalDate fecha) {
     return this.fecha.equals(fecha);
   }
-
+  //Si hubieran más tipos de movimientos convendría o bien un enum o una clase de tipos de movimientos
   public boolean isDeposito() {
     return esDeposito;
   }
@@ -46,6 +49,7 @@ public class Movimiento {
 
   public void agregateA(Cuenta cuenta) {
     cuenta.setSaldo(calcularValor(cuenta));
+    //Le tendría que pasar este movimiento, y no crear un duplicado
     cuenta.agregarMovimiento(fecha, monto, esDeposito);
   }
 
